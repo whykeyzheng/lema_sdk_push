@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
  * 邮箱：rance935@163.com
  */
 public class BaseFragment extends Fragment {
+
+
     public Activity mActivity;
 
     @Nullable
