@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <com.example.lemasdkdemo.widget.CircleImageView
+            android:id="@+id/iv_chat_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:src="@mipmap/ic_start_logo" />
+
+    <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:src="@mipmap/ic_start_logo" />
+
+
+    <!-- android:background="@drawable/chat_shape_avatar_bg"-->
+    <com.example.lemasdkdemo.widget.CircleColorImageView
+            android:id="@+id/tv_chat_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:text="A"
+            tools:visibility="visible" />
+</FrameLayout>
