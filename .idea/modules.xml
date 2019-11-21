@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chatui.iml" filepath="$PROJECT_DIR$/chatui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/lema_sdk_push.iml" filepath="$PROJECT_DIR$/.idea/lema_sdk_push.iml" />
     </modules>
   </component>
 </project>

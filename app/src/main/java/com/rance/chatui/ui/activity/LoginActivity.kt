@@ -18,7 +18,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
         val etName = findViewById<EditText>(R.id.et_name)
         val etPass = findViewById<EditText>(R.id.et_pass)
         val button = findViewById<Button>(R.id.btn)
