@@ -46,7 +46,7 @@ class UserInfoActivity : AppCompatActivity() {
         LMLogUtils.d("daxiong","==== LMClient.getMyUser()===="+myuser)
         //展示数据
         if (myuser != null) {
-            Glide.with(this).load(myuser.avatar_url).into(ivAvatar)
+            Glide.with(this).load(myuser.avatar_url).placeholder( R.mipmap.ic_start_logo ).error( R.mipmap.ic_start_logo  ).into(ivAvatar)
             tvName.text = myuser.username
             tvNickName.text = myuser.nickname
             tvBirthday.text = myuser.birthday
