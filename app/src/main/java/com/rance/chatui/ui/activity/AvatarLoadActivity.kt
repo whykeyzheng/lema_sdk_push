@@ -208,10 +208,8 @@ class AvatarLoadActivity : AppCompatActivity() {
                 }*/
                 try {
                     val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(mUriPath!!))
-                    LMLogUtils.d("daxiong", "=======裁剪完后返回路径========" + mUriPath)
 
                     val file = File(LMPathUtils.getPath(this, mUriPath))
-                    LMLogUtils.d("daxiong", "=======userAvatarUpdata========" + file)
 
                     LMClient.userAvatarUpdata(file, lmcallback)
                     setImageToHeadView(intent, bitmap)

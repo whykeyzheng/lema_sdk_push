@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lema.imsdk.callback.LMBasicApiCallback
 import com.lema.imsdk.client.LMClient
+import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 
 class LoginActivity : AppCompatActivity() {
@@ -21,35 +22,42 @@ class LoginActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.hide()
         }
-        val etName = findViewById<EditText>(R.id.et_name)
-        val etPass = findViewById<EditText>(R.id.et_pass)
-        val button = findViewById<Button>(R.id.btn)
-        val tvRegistered = findViewById<TextView>(R.id.tv_registered)
-
-
         //初始化
         LMClient.init(this)
-
-        //登录
-        button.setOnClickListener {
-            val name = etName.text.toString()
-            val pass = etPass.text.toString()
-
-            if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass)) {
-
-                LMClient.login(name, pass, lmcallback)
-            } else {
-                Toast.makeText(this, "账号或密码不能为空!", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        //注册
-        tvRegistered.setOnClickListener {
-            val intent = Intent(this, RegisteredActivity::class.java)
+        if (LMClient.isLogin()) {
+            LMClient.autoLogin()
+            val intent = Intent(this@LoginActivity, UserInfoActivity::class.java)
             startActivity(intent)
+            finish()
+        } else {
+
+
+            val etName = findViewById<EditText>(R.id.et_name)
+            val etPass = findViewById<EditText>(R.id.et_pass)
+            val button = findViewById<Button>(R.id.btn)
+            val tvRegistered = findViewById<TextView>(R.id.tv_registered)
+
+
+            //登录
+            button.setOnClickListener {
+                val name = etName.text.toString()
+                val pass = etPass.text.toString()
+
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(pass)) {
+
+                    LMClient.login(name, pass, lmcallback)
+                } else {
+                    Toast.makeText(this, "账号或密码不能为空!", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            //注册
+            tvRegistered.setOnClickListener {
+                val intent = Intent(this, RegisteredActivity::class.java)
+                startActivity(intent)
+            }
+
         }
-
-
     }
 
     /**

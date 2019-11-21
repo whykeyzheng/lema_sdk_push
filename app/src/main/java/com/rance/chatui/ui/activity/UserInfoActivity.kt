@@ -41,6 +41,8 @@ class UserInfoActivity : AppCompatActivity() {
         val tvUpdateAvatar = findViewById<TextView>(R.id.tv_update_avatar)
         val tvChatMain = findViewById<TextView>(R.id.tv_chat_main)
 
+        val tvOutLogin = findViewById<TextView>(R.id.tv_out_log)
+
         //获取当前登录账号的用户信息
         val myuser = LMClient.getMyUser()
         LMLogUtils.d("daxiong","==== LMClient.getMyUser()===="+myuser)
@@ -71,6 +73,13 @@ class UserInfoActivity : AppCompatActivity() {
         tvChatMain.setOnClickListener {
             val intent = Intent(this, IMActivity::class.java)
             startActivity(intent)
+        }
+        //退出登录
+        tvOutLogin.setOnClickListener {
+            LMClient.logout()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
 
