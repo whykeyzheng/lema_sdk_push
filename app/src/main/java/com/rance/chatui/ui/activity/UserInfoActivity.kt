@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.lema.imsdk.client.LMClient
+import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 
 /**
@@ -41,9 +43,10 @@ class UserInfoActivity : AppCompatActivity() {
 
         //获取当前登录账号的用户信息
         val myuser = LMClient.getMyUser()
-
+        LMLogUtils.d("daxiong","==== LMClient.getMyUser()===="+myuser)
         //展示数据
         if (myuser != null) {
+            Glide.with(this).load(myuser.avatar_url).into(ivAvatar)
             tvName.text = myuser.username
             tvNickName.text = myuser.nickname
             tvBirthday.text = myuser.birthday
