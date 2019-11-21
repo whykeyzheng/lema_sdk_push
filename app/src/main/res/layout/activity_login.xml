@@ -86,16 +86,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-        <TextView
-                android:id="@+id/tv_ava"
-                android:text="选取手机相册"
-                android:textSize="17sp"
-                android:padding="10dp"
-                android:textColor="#2086f9"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

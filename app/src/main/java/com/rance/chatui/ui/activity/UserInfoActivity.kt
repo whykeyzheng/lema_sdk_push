@@ -37,6 +37,7 @@ class UserInfoActivity : AppCompatActivity() {
 
         val tvUpdatePass = findViewById<TextView>(R.id.tv_update_pass)
         val tvUpdateAvatar = findViewById<TextView>(R.id.tv_update_avatar)
+        val tvChatMain = findViewById<TextView>(R.id.tv_chat_main)
 
         //获取当前登录账号的用户信息
         val myuser = LMClient.getMyUser()
@@ -60,6 +61,12 @@ class UserInfoActivity : AppCompatActivity() {
         //修改头像
         tvUpdateAvatar.setOnClickListener {
             val intent = Intent(this, AvatarLoadActivity::class.java)
+            startActivity(intent)
+        }
+
+        //聊天主页
+        tvChatMain.setOnClickListener {
+            val intent = Intent(this, IMActivity::class.java)
             startActivity(intent)
         }
 

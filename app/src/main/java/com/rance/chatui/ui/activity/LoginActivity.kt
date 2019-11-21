@@ -26,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         val button = findViewById<Button>(R.id.btn)
         val tvRegistered = findViewById<TextView>(R.id.tv_registered)
 
-        val tvAva = findViewById<TextView>(R.id.tv_ava)
 
         //初始化
         LMClient.init(this)
@@ -50,10 +49,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        tvAva.setOnClickListener {
-            val intent = Intent(this, AvatarLoadActivity::class.java)
-            startActivity(intent)
-        }
 
     }
 

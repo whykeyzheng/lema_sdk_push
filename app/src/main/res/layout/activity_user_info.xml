@@ -31,6 +31,17 @@
             android:text="修改头像"
             android:textColor="#2086f9"
             android:textSize="17sp" />
+        <TextView
+            android:id="@+id/tv_chat_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="?selectableItemBackground"
+            android:padding="10dp"
+            android:text="进入聊天主界面"
+            android:textColor="#2086f9"
+            android:textSize="17sp" />
 
         <LinearLayout android:layout_width="match_parent"
                       android:layout_marginLeft="20dp"
