@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="15dp"
             tools:background="@mipmap/ic_start_logo" />
 
         <TextView
@@ -32,23 +32,25 @@
             android:text="修改头像"
             android:textColor="#2086f9"
             android:textSize="17sp" />
-
         <TextView
-            android:id="@+id/tv_chat_main"
+            android:id="@+id/tv_update_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="?selectableItemBackground"
             android:padding="10dp"
-            android:text="进入聊天主界面"
+            android:text="修改个人资料"
             android:textColor="#2086f9"
             android:textSize="17sp" />
+
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginRight="20dp"
             app:cardCornerRadius="8dp">
 
@@ -227,38 +229,8 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/tv_update_user_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="?selectableItemBackground"
-            android:padding="10dp"
-            android:text="修改个人资料"
-            android:textColor="#2086f9"
-            android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/tv_update_pass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="?selectableItemBackground"
-            android:padding="10dp"
-            android:text="修改密码"
-            android:textColor="#2086f9"
-            android:textSize="17sp" />
 
-        <TextView
-            android:id="@+id/tv_out_log"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="?selectableItemBackground"
-            android:padding="10dp"
-            android:text="退出登录"
-            android:textColor="#2086f9"
-            android:textSize="17sp" />
 
     </LinearLayout>
 </ScrollView>

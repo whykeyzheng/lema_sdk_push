@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
+        android:id="@+id/action_pass"
+        android:orderInCategory="100"
+        android:title="修改密码"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="退出登录"

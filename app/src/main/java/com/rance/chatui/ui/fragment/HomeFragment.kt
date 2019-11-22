@@ -47,36 +47,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val tvUpdatePass = view.findViewById<TextView>(R.id.tv_update_pass)
         val tvUpdateAvatar = view.findViewById<TextView>(R.id.tv_update_avatar)
-        val tvChatMain = view.findViewById<TextView>(R.id.tv_chat_main)
         val tvUserInfo = view.findViewById<TextView>(R.id.tv_update_user_info)
-        val tvOutLogin = view.findViewById<TextView>(R.id.tv_out_log)
 
         showUserInfo()
 
-        //修改密码
-        tvUpdatePass.setOnClickListener {
-            val intent = Intent(context, PassUpdateActivity::class.java)
-            startActivity(intent)
-        }
         //修改头像
         tvUpdateAvatar.setOnClickListener {
             val intent = Intent(context, AvatarLoadActivity::class.java)
             startActivity(intent)
         }
 
-        //聊天主页
-        tvChatMain.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-        }
-        //退出登录
-        tvOutLogin.setOnClickListener {
-            LMClient.logout()
-            val intent = Intent(context, LoginActivity::class.java)
-            startActivity(intent)
-        }
         //修改个人资料
         tvUserInfo.setOnClickListener {
             val intent = Intent(context, UpdateUserInfoActivity::class.java)
