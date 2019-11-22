@@ -26,12 +26,10 @@ class LoginActivity : AppCompatActivity() {
         LMClient.init(this)
         if (LMClient.isLogin()) {
             LMClient.autoLogin()
-            val intent = Intent(this@LoginActivity, UserInfoActivity::class.java)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         } else {
-
-
             val etName = findViewById<EditText>(R.id.et_name)
             val etPass = findViewById<EditText>(R.id.et_pass)
             val button = findViewById<Button>(R.id.btn)
