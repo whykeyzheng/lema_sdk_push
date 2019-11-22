@@ -29,7 +29,7 @@ public class TestFragmentAdapter extends FragmentPagerAdapter {
         if (position == 2) {
             return AddFriendFragment.newInstance();
         } else if (position == 3) {
-            return HomeFragment.newInstance();
+            return HomeFragment.Companion.newInstance();
         } else {
             return TestFragment.newInstance(CONTENT[position % CONTENT.length]);
         }

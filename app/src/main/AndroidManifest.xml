@@ -30,7 +30,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -63,7 +63,6 @@
         <activity android:name=".ui.activity.UserInfoActivity" />
         <activity android:name=".ui.activity.PassUpdateActivity" />
         <activity android:name=".ui.activity.AvatarLoadActivity" />
-        <activity android:name=".ui.activity.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

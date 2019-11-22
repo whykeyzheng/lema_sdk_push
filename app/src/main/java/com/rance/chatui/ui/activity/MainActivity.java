@@ -1,5 +1,6 @@
 package com.rance.chatui.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.lema.imsdk.client.LMClient;
 import com.rance.chatui.R;
 import com.rance.chatui.adapter.TestFragmentAdapter;
 import com.rance.chatui.widget.MainBottomTabLayout;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
     }
 
 
@@ -47,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            LMClient.logout(); //退出登录
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
             return true;
         }
 
