@@ -63,6 +63,7 @@
         <activity android:name=".ui.activity.UserInfoActivity" />
         <activity android:name=".ui.activity.PassUpdateActivity" />
         <activity android:name=".ui.activity.AvatarLoadActivity" />
+        <activity android:name=".ui.activity.MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -378,20 +378,20 @@ public class IMActivity extends AppCompatActivity {
     }
 
 
-    private void getData() {
-        LMBasicBeanCallback callback = new LMBasicBeanCallback<LMChatBean>() {
-            @Override
-            public void gotResultFail(int i, String s) {
-                Toast.makeText(IMActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void gotResultSuccess(LMChatBean lmChatBean) {
-
-            }
-        };
-
-    }
+//    private void getData() {
+//        LMBasicBeanCallback callback = new LMBasicBeanCallback<LMChatBean>() {
+//            @Override
+//            public void gotResultFail(int i, String s) {
+//                Toast.makeText(IMActivity.this, s, Toast.LENGTH_LONG).show();
+//            }
+//
+//            @Override
+//            public void gotResultSuccess(LMChatBean lmChatBean) {
+//
+//            }
+//        };
+//
+//    }
 
 
     @Override

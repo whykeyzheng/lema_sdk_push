@@ -71,8 +71,7 @@ class LoginActivity : AppCompatActivity() {
 
         override fun gotResultSuccess() {
             Toast.makeText(this@LoginActivity, "登录成功", Toast.LENGTH_SHORT).show()
-
-            val intent = Intent(this@LoginActivity, UserInfoActivity::class.java)
+            val intent = Intent(this@LoginActivity, MainActivity::class.java)
             startActivity(intent)
             finish()
         }

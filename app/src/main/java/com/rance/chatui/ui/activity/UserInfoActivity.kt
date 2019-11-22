@@ -63,7 +63,7 @@ class UserInfoActivity : AppCompatActivity() {
 
         //聊天主页
         tvChatMain.setOnClickListener {
-            val intent = Intent(this, IMActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         //退出登录
