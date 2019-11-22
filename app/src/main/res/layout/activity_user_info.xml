@@ -36,7 +36,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
             android:background="?selectableItemBackground"
             android:padding="10dp"
             android:text="进入聊天主界面"
@@ -184,7 +183,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
-
+        <TextView
+            android:id="@+id/tv_update_user_info"
+            android:text="修改个人资料"
+            android:textSize="17sp"
+            android:padding="10dp"
+            android:background="?selectableItemBackground"
+            android:textColor="#2086f9"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <TextView
                 android:id="@+id/tv_update_pass"
                 android:text="修改密码"
@@ -192,7 +200,6 @@
                 android:padding="10dp"
                 android:background="?selectableItemBackground"
                 android:textColor="#2086f9"
-                android:layout_marginTop="70dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -203,7 +210,6 @@
             android:padding="10dp"
             android:background="?selectableItemBackground"
             android:textColor="#2086f9"
-            android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

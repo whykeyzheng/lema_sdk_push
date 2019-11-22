@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="study_view_spinner_values">
+        <item >男</item>
+        <item >女</item>
+    </array>
+</resources>

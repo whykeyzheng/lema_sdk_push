@@ -40,6 +40,7 @@ class UserInfoActivity : AppCompatActivity() {
         val tvUpdatePass = findViewById<TextView>(R.id.tv_update_pass)
         val tvUpdateAvatar = findViewById<TextView>(R.id.tv_update_avatar)
         val tvChatMain = findViewById<TextView>(R.id.tv_chat_main)
+        val tvUserInfo = findViewById<TextView>(R.id.tv_update_user_info)
 
         val tvOutLogin = findViewById<TextView>(R.id.tv_out_log)
 
@@ -80,6 +81,11 @@ class UserInfoActivity : AppCompatActivity() {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+        //修改个人资料
+        tvUserInfo.setOnClickListener {
+            val intent = Intent(this, UpdateUserInfoActivity::class.java)
+            startActivity(intent)
         }
 
 
