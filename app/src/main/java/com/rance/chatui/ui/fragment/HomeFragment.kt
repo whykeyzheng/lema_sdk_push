@@ -33,6 +33,11 @@ class HomeFragment : Fragment() {
     val tvRegion by lazy { view!!.findViewById<TextView>(R.id.tv_region) }
     val tvAddress by lazy { view!!.findViewById<TextView>(R.id.tv_address) }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        EventBus.getDefault().register(this)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
@@ -41,8 +46,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LMClient.init(context)
-        EventBus.getDefault().register(this)
+
         val tvUpdatePass = view.findViewById<TextView>(R.id.tv_update_pass)
         val tvUpdateAvatar = view.findViewById<TextView>(R.id.tv_update_avatar)
         val tvChatMain = view.findViewById<TextView>(R.id.tv_chat_main)

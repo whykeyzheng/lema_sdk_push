@@ -33,7 +33,7 @@ public class AddFriendFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_friend, container, false);
-        LMClient.init(LMClient.getContext());   //初始化
+           //初始化
         edtUser = view.findViewById(R.id.edt_username);
         edtAccount = view.findViewById(R.id.edt_account);
         btnAdd = view.findViewById(R.id.btn_add);
