@@ -16,17 +16,21 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import androidx.core.net.toFile
+import com.bumptech.glide.Glide
 import com.lema.imsdk.bean.LMUserBean
 import com.lema.imsdk.callback.LMBasicBeanCallback
 import com.lema.imsdk.client.LMClient
 import com.lema.imsdk.util.LMLogUtils
 import com.lema.imsdk.util.LMPathUtils
 import com.rance.chatui.R
+import com.rance.chatui.eventbus.UserInfoEventBus
+import org.greenrobot.eventbus.EventBus
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -51,9 +55,15 @@ class AvatarLoadActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_avatar_load)
+        if (supportActionBar != null) {
+            supportActionBar!!.hide()
+        }
         mExtStorDir = Environment.getExternalStorageDirectory().toString()
         headImage = findViewById<View>(R.id.imageView) as ImageView
 
+        //获取当前登录账号的用户信息
+        val myuser = LMClient.getMyUser()
+        Glide.with(this).load(myuser.avatar_url).placeholder( R.mipmap.ic_start_logo ).error( R.mipmap.ic_start_logo  ).into(headImage!!)
         val buttonLocal = findViewById<View>(R.id.buttonLocal) as Button
         buttonLocal.setOnClickListener {
             //                choseHeadImageFromGallery();
@@ -64,6 +74,11 @@ class AvatarLoadActivity : AppCompatActivity() {
         buttonCamera.setOnClickListener {
             //                choseHeadImageFromCameraCapture();
             checkStoragePermission()//检查是否有权限
+        }
+
+        val tvBack =  findViewById<TextView>(R.id.tv_back)
+        tvBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -163,11 +178,10 @@ class AvatarLoadActivity : AppCompatActivity() {
     val lmcallback = object : LMBasicBeanCallback<LMUserBean>() {
         override fun gotResultFail(p0: Int, p1: String?) {
             Toast.makeText(this@AvatarLoadActivity, "更换头像失败: $p1", Toast.LENGTH_SHORT).show()
-            LMLogUtils.d("daxiong", "=======更换头像失败========" + p1)
         }
-
         override fun gotResultSuccess(p0: LMUserBean?) {
             Toast.makeText(this@AvatarLoadActivity, "更换头像成功: $p0", Toast.LENGTH_SHORT).show()
+            UserInfoEventBus.post()//发送事件
             finish()
         }
 

@@ -8,6 +8,7 @@ import com.lema.imsdk.bean.LMUserBean
 import com.lema.imsdk.callback.LMBasicBeanCallback
 import com.lema.imsdk.client.LMClient
 import com.rance.chatui.R
+import com.rance.chatui.eventbus.UserInfoEventBus
 
 /**
  * author: daxiong
@@ -33,7 +34,10 @@ class UpdateUserInfoActivity : AppCompatActivity() {
         val etRegion = findViewById<EditText>(R.id.et_region)
         val etAddress = findViewById<EditText>(R.id.et_address)
         val button = findViewById<Button>(R.id.btn)
-
+        val tvBack =  findViewById<TextView>(R.id.tv_back)
+        tvBack.setOnClickListener {
+            finish()
+        }
         var gen = 0
 
         val myuser = LMClient.getMyUser()
@@ -84,6 +88,7 @@ class UpdateUserInfoActivity : AppCompatActivity() {
 
         override fun gotResultSuccess(p0: LMUserBean?) {
             Toast.makeText(this@UpdateUserInfoActivity, "修改成功", Toast.LENGTH_SHORT).show()
+            UserInfoEventBus.post()//发送事件
             finish()
         }
     }
