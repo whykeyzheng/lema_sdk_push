@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.rance.chatui.ui.fragment.AddFriendFragment;
 import com.rance.chatui.ui.fragment.ChatFragment;
+import com.rance.chatui.ui.fragment.FriendManagementFragment;
 import com.rance.chatui.ui.fragment.HomeFragment;
 import com.rance.chatui.ui.fragment.TestFragment;
 
@@ -27,7 +28,9 @@ public class TestFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Log.e("whykey", "===" + CONTENT[position % CONTENT.length]);
-        if (position == 0) {
+        if (position == 1) {
+            return FriendManagementFragment.Companion.newInstance();
+        } else if (position == 0) {
             return ChatFragment.Companion.newInstance();
         } else if (position == 2) {
             return AddFriendFragment.newInstance();
