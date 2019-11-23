@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lema.imsdk.bean.chat.LMChatBean
 import com.lema.imsdk.bean.chat.LMFriendBean
+import com.lema.imsdk.callback.LMBasicApiCallback
 import com.lema.imsdk.callback.LMBasicBeanCallback
 import com.lema.imsdk.callback.LMBasicListCallback
 import com.lema.imsdk.client.LMClient
@@ -83,11 +84,34 @@ class FriendManagementFragment : Fragment() {
             }
 
             fmAdapter.LMFriendBeanList = p0
+            fmAdapter.setOnFriendClickListener(object :FriendManagementAdapter.OnFriendClickListener{
+
+                override fun onAgreeFriendClick(position: Int) {
+                    LMLogUtils.d("daxiong", "====点击==tv_agree=="+p0[position].username)
+
+                    LMClient.friendApprove(p0[position].username,1, addCallback)
+                }
+
+                override fun onRefuseFriendClick(position: Int) {
+                    LMLogUtils.d("daxiong", "====点击==tv_region=="+p0[position].username)
+                    LMClient.friendApprove(p0[position].username,-1, addCallback)
+                }
+            })
             fmAdapter.notifyDataSetChanged()
 
         }
     }
 
+    val addCallback = object : LMBasicApiCallback(){
+        override fun gotResultFail(p0: Int, p1: String?) {
+            Toast.makeText(context, "操作失败: $p1", Toast.LENGTH_SHORT).show()
+        }
+
+        override fun gotResultSuccess() {
+            Toast.makeText(context, "操作成功:", Toast.LENGTH_SHORT).show()
+        }
+
+    }
 
     override fun onDestroy() {
         super.onDestroy()

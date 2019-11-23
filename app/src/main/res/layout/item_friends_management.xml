@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginLeft="10dp"
@@ -14,13 +14,43 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
             android:text="好友昵称"
             android:textColor="#666666" />
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@+id/tv_refuse"
+            android:background="@drawable/selector_item_friend"
+            android:padding="5dp"
+
+            android:text="同意"
+            android:textColor="#2086f9"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_refuse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/selector_item_friend"
+            android:padding="5dp"
+            android:text="拒绝"
+            android:textColor="#2086f9"
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>
