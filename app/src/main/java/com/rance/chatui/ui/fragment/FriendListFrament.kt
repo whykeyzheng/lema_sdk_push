@@ -10,12 +10,15 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lema.imsdk.bean.chat.LMFriendBean
-import com.lema.imsdk.callback.LMBasicApiCallback
 import com.lema.imsdk.callback.LMBasicListCallback
 import com.lema.imsdk.client.LMClient
 import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 import com.rance.chatui.adapter.FriendListAdapter
+import com.rance.chatui.eventbus.FriendLlistEventBus
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
  * author: daxiong
@@ -32,7 +35,7 @@ class FriendListFrament : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        //   EventBus.getDefault().register(this)
+        EventBus.getDefault().register(this)
         recyclerView.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager? //LinearLayoutManager(activity)
         recyclerView.adapter = fmAdapter
         tvBack.setOnClickListener {
@@ -72,10 +75,8 @@ class FriendListFrament : Fragment() {
             fmAdapter.LMFriendBeanList = p0
             fmAdapter.setOnFriendClickListener(object : FriendListAdapter.OnFriendClickListener {
 
-                override fun onDeleteFriendClick(position: Int) {
-                    p0?.let {
-                        LMClient.friendDelete(p0[position].username, addCallback)
-                    }
+                override fun onFriendMessageClick(lmFriendBean: LMFriendBean) {
+                    LMLogUtils.d("daxiong", "====点击了好友====" + lmFriendBean.username)
                 }
 
             })
@@ -84,21 +85,14 @@ class FriendListFrament : Fragment() {
         }
     }
 
-    val addCallback = object : LMBasicApiCallback() {
-        override fun gotResultFail(p0: Int, p1: String?) {
-            Toast.makeText(context, "删除好友失败: $p1", Toast.LENGTH_SHORT).show()
-            LMLogUtils.d("daxiong", "====删除好友失败==== $p1")
-        }
-
-        override fun gotResultSuccess() {
-            Toast.makeText(context, "删除好友成功:", Toast.LENGTH_SHORT).show()
-        }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onUserInfoEvent(event: FriendLlistEventBus) {//接收
+        initData()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        //EventBus.getDefault().unregister(this)
+        EventBus.getDefault().unregister(this)
     }
 
 

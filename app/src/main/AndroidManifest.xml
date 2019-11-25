@@ -60,7 +60,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.UpdateUserInfoActivity" />
-        <activity android:name=".ui.activity.UserInfoActivity" />
         <activity android:name=".ui.activity.PassUpdateActivity" />
         <activity android:name=".ui.activity.AvatarLoadActivity" />
         <activity android:name=".ui.activity.MainActivity" />

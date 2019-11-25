@@ -3,7 +3,6 @@ package com.rance.chatui.adapter
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.lema.imsdk.bean.chat.LMFriendBean
 import com.rance.chatui.R
@@ -15,7 +14,7 @@ import com.rance.chatui.R
  * description:
  * -----------------------------------------------
  */
-class FriendListAdapter (var LMFriendBeanList: MutableList<LMFriendBean>? = null) : RecyclerView.Adapter<FriendListAdapter.ViewHolder>() {
+class FriendListAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? = null) : RecyclerView.Adapter<FriendListAdapter.ViewHolder>() {
     private var mOnFriendClickListener: FriendListAdapter.OnFriendClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendListAdapter.ViewHolder {
 //        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
@@ -31,8 +30,8 @@ class FriendListAdapter (var LMFriendBeanList: MutableList<LMFriendBean>? = null
             val lmFriendBean = it[position]
 
             holder.tvName.text = lmFriendBean.username
-            holder.tvDelete.setOnClickListener {
-                mOnFriendClickListener!!.onDeleteFriendClick(position)
+            holder.itemView.setOnClickListener {
+                mOnFriendClickListener!!.onFriendMessageClick(lmFriendBean)
             }
         }
 
@@ -44,12 +43,11 @@ class FriendListAdapter (var LMFriendBeanList: MutableList<LMFriendBean>? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvName: TextView = itemView.findViewById<View>(R.id.tv_name) as TextView
-        var tvDelete: TextView = itemView.findViewById<View>(R.id.tv_delete) as TextView
 
     }
 
     interface OnFriendClickListener {
-        fun onDeleteFriendClick(position: Int)
+        fun onFriendMessageClick(lmFriendBean: LMFriendBean)
     }
 
     fun setOnFriendClickListener(onFriendClickListener: FriendListAdapter.OnFriendClickListener) {

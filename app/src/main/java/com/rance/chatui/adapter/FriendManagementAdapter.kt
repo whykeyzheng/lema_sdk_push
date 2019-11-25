@@ -1,14 +1,10 @@
 package com.rance.chatui.adapter
 
-import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.isVisible
-
 import androidx.recyclerview.widget.RecyclerView
-
 import com.lema.imsdk.bean.chat.LMFriendBean
 import com.rance.chatui.R
 
@@ -38,17 +34,19 @@ class FriendManagementAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? =
                 holder.tvRefuse.isVisible = false
                 holder.tvStatus.isVisible = true
                 holder.tvDelete.isVisible = true
-                when(lmFriendBean.status){
-                    1 ->{
+                when (lmFriendBean.status) {
+                    1 -> {
                         holder.tvStatus.text = "已同意"
                     }
-                    -1 ->{
+                    -1 -> {
                         holder.tvStatus.text = "已拒绝"
-                    }                }
+                    }
+                }
             } else {
                 holder.tvStatus.isVisible = false
                 holder.tvAgree.isVisible = true
                 holder.tvRefuse.isVisible = true
+                holder.tvDelete.isVisible = false
 
             }
             holder.tvName.text = lmFriendBean.username

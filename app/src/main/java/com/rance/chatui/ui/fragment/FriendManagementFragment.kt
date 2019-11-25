@@ -16,6 +16,7 @@ import com.lema.imsdk.client.LMClient
 import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 import com.rance.chatui.adapter.FriendManagementAdapter
+import com.rance.chatui.eventbus.FriendLlistEventBus
 
 /**
  * author: daxiong
@@ -99,6 +100,7 @@ class FriendManagementFragment : Fragment() {
 
         override fun gotResultSuccess() {
             Toast.makeText(context, "操作成功:", Toast.LENGTH_SHORT).show()
+            FriendLlistEventBus.post()
             initData()
         }
 

@@ -25,20 +25,6 @@
 
 
 
-        <TextView
-            android:id="@+id/tv_delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/selector_button"
-            android:padding="5dp"
-            android:text="删除"
-            android:textColor="#ffffff"
-            android:textSize="14sp" />
-
-
     </RelativeLayout>
 
 
