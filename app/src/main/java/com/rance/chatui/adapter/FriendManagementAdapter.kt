@@ -37,6 +37,7 @@ class FriendManagementAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? =
                 holder.tvAgree.isVisible = false
                 holder.tvRefuse.isVisible = false
                 holder.tvStatus.isVisible = true
+                holder.tvDelete.isVisible = true
                 when(lmFriendBean.status){
                     1 ->{
                         holder.tvStatus.text = "已同意"
@@ -58,6 +59,10 @@ class FriendManagementAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? =
                 mOnFriendClickListener!!.onRefuseFriendClick(position)
             }
 
+            holder.tvDelete.setOnClickListener {
+                mOnFriendClickListener!!.onDeleteFriendClick(position)
+            }
+
         }
 
     }
@@ -72,12 +77,14 @@ class FriendManagementAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? =
         var tvAgree: TextView = itemView.findViewById<View>(R.id.tv_agree) as TextView
         var tvRefuse: TextView = itemView.findViewById<View>(R.id.tv_refuse) as TextView
         var tvStatus: TextView = itemView.findViewById<View>(R.id.tv_status) as TextView
+        var tvDelete: TextView = itemView.findViewById<View>(R.id.tv_delete) as TextView
 
     }
 
     interface OnFriendClickListener {
         fun onAgreeFriendClick(position: Int)
         fun onRefuseFriendClick(position: Int)
+        fun onDeleteFriendClick(position: Int)
     }
 
     fun setOnFriendClickListener(onFriendClickListener: FriendManagementAdapter.OnFriendClickListener) {

@@ -81,6 +81,12 @@ class FriendManagementFragment : Fragment() {
                         LMClient.friendApprove(p0[position].username, -1, addCallback)
                     }
                 }
+
+                override fun onDeleteFriendClick(position: Int) {
+                    p0?.let {
+                        LMClient.friendDelete(p0[position].username, addCallback)
+                    }
+                }
             })
             fmAdapter.notifyDataSetChanged()
         }
@@ -93,6 +99,7 @@ class FriendManagementFragment : Fragment() {
 
         override fun gotResultSuccess() {
             Toast.makeText(context, "操作成功:", Toast.LENGTH_SHORT).show()
+            initData()
         }
 
     }

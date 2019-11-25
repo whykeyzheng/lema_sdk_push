@@ -29,25 +29,14 @@ class FriendListAdapter (var LMFriendBeanList: MutableList<LMFriendBean>? = null
 
         LMFriendBeanList?.let {
             val lmFriendBean = it[position]
-            if (lmFriendBean.status == 1) {
-                holder.tvAgree.isVisible = false
-                holder.tvRefuse.isVisible = false
-            } else {
-                holder.tvAgree.isVisible = true
-                holder.tvRefuse.isVisible = true
-            }
-            holder.tvName.text = lmFriendBean.username
-            holder.tvAgree.setOnClickListener {
-                mOnFriendClickListener!!.onAgreeFriendClick(position)
-            }
-            holder.tvRefuse.setOnClickListener {
-                mOnFriendClickListener!!.onRefuseFriendClick(position)
-            }
 
+            holder.tvName.text = lmFriendBean.username
+            holder.tvDelete.setOnClickListener {
+                mOnFriendClickListener!!.onDeleteFriendClick(position)
+            }
         }
 
     }
-
 
     override fun getItemCount(): Int {
         return LMFriendBeanList?.size ?: 0
@@ -55,14 +44,12 @@ class FriendListAdapter (var LMFriendBeanList: MutableList<LMFriendBean>? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvName: TextView = itemView.findViewById<View>(R.id.tv_name) as TextView
-        var tvAgree: TextView = itemView.findViewById<View>(R.id.tv_agree) as TextView
-        var tvRefuse: TextView = itemView.findViewById<View>(R.id.tv_refuse) as TextView
+        var tvDelete: TextView = itemView.findViewById<View>(R.id.tv_delete) as TextView
 
     }
 
     interface OnFriendClickListener {
-        fun onAgreeFriendClick(position: Int)
-        fun onRefuseFriendClick(position: Int)
+        fun onDeleteFriendClick(position: Int)
     }
 
     fun setOnFriendClickListener(onFriendClickListener: FriendListAdapter.OnFriendClickListener) {
