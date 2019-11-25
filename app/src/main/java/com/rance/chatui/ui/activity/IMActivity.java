@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.labo.kaji.relativepopupwindow.RelativePopupWindow;
+import com.lema.imsdk.bean.LMPersonBean;
 import com.lema.imsdk.bean.chat.LMChatBean;
+import com.lema.imsdk.bean.message.LMMessageBean;
+import com.lema.imsdk.bean.message.LMMessageExecuteBean;
 import com.lema.imsdk.callback.LMBasicBeanCallback;
+import com.lema.imsdk.callback.LMMessageCallBack;
+import com.lema.imsdk.callback.LMMessageEventListener;
 import com.lema.imsdk.client.LMClient;
 import com.rance.chatui.R;
 import com.rance.chatui.adapter.ChatAdapter;
@@ -83,17 +89,18 @@ public class IMActivity extends AppCompatActivity {
     int res = 0;
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
-    private LMChatBean bean = new LMChatBean();
+    private LMChatBean bean;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LMClient.init(this);   //初始化
+
         setContentView(R.layout.activity_main);
         findViewByIds();
         EventBus.getDefault().register(this);
         initWidget();
+        enterRoom();
         handleIncomeAction();
     }
 
@@ -109,6 +116,34 @@ public class IMActivity extends AppCompatActivity {
         viewpager = (NoScrollViewPager) findViewById(R.id.viewpager);
     }
 
+    /**
+     * 进入会话
+     */
+    private void enterRoom() {
+        LMClient.getUserChatDetail("daxiong", new LMBasicBeanCallback<LMChatBean>() {
+            @Override
+            public void gotResultSuccess(LMChatBean lmChatBean) {
+                bean = lmChatBean;
+                LMClient.enterChatRoom(lmChatBean);
+            }
+
+            @Override
+            public void gotResultFail(int i, String s) {
+                Toast.makeText(IMActivity.this, s, Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+    }
+
+    /**
+     * 获取会话聊天记录
+     */
+    private void getHistoryMsg() {
+
+
+    }
+
     private void handleIncomeAction() {
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
@@ -117,6 +152,7 @@ public class IMActivity extends AppCompatActivity {
 
         MessageCenter.handleIncoming(bundle, getIntent().getType(), this);
     }
+
 
     @SuppressLint("WrongConstant")
     private void initWidget() {
@@ -298,28 +334,14 @@ public class IMActivity extends AppCompatActivity {
      */
     private void LoadData() {
         //根据用户名获取接口
-        LMClient.getUserChatDetail("whykey", new LMBasicBeanCallback<LMChatBean>() {
+        messageInfos = new ArrayList<>();
 
-            @Override
-            public void gotResultFail(int i, String s) {
-                Toast.makeText(IMActivity.this, s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void gotResultSuccess(LMChatBean lmChatBean) {
-                bean = lmChatBean;
-            }
-        });
-
-
-        //       messageInfos = new ArrayList<>();
-//
-//        MessageInfo messageInfo = new MessageInfo();
-//        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
-//        messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-//        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-//        messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-//        messageInfos.add(messageInfo);
+        MessageInfo messageInfo = new MessageInfo();
+        messageInfo.setContent("你好，欢迎使用Rance的聊天界面框架");
+        messageInfo.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+        messageInfo.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+        messageInfo.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+        messageInfos.add(messageInfo);
 //
 //        MessageInfo messageInfo1 = new MessageInfo();
 //        messageInfo1.setFilepath("http://www.trueme.net/bb_midi/welcome.wav");
@@ -345,11 +367,75 @@ public class IMActivity extends AppCompatActivity {
 //        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
 //        messageInfos.add(messageInfo3);
 
-        //      chatAdapter.addAll(messageInfos);
+        chatAdapter.addAll(messageInfos);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void MessageEventBus(final MessageInfo messageInfo) {
+
+        //创建消息和发送消息
+        Log.e("whykey", "=====" + messageInfo.getContent());
+        LMMessageBean beans = bean.createTxtMessage(messageInfo.getContent());
+        LMClient.sendMessage(beans);
+//        beans.setSendCallback(new LMMessageCallBack() {
+//                                  @Override
+//                                  public void gotResultSuccess(LMMessageBean lmMessageBean) {
+//                                      super.gotResultSuccess(lmMessageBean);
+//                                  }
+//
+//                                  @Override
+//                                  public void gotResultFail(LMMessageBean lmMessageBean, int i, String s) {
+//                                      super.gotResultFail(lmMessageBean, i, s);
+//                                  }
+//                              }
+
+        //       );
+
+
+        //发送消息回调
+        LMClient.addMessageEventListener(beans.chat_id, new LMMessageEventListener() {
+            @Override
+            public void onMessageReceive(LMMessageBean lmMessageBean) {
+
+            }
+
+            @Override
+            public void onMessagesReceive(List<LMMessageBean> list) {
+
+            }
+
+            @Override
+            public void onMessageSendSuccess(LMMessageBean lmMessageBean) {
+                Toast.makeText(IMActivity.this, "发送成功", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onMessageSendFail(LMMessageBean lmMessageBean, int i, String s) {
+                Toast.makeText(IMActivity.this, "发送失败啊啊啊啊", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onMessageStatusChange(LMMessageBean lmMessageBean) {
+
+            }
+
+            @Override
+            public void onMessagesStatusChange(List<LMMessageBean> list) {
+
+            }
+
+            @Override
+            public void onMessageDeleted(LMMessageExecuteBean lmMessageExecuteBean) {
+
+            }
+
+            @Override
+            public void onPersonClick(LMPersonBean lmPersonBean) {
+
+            }
+        });
+
         messageInfo.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
         messageInfo.setType(Constants.CHAT_ITEM_TYPE_RIGHT);
         messageInfo.setSendState(Constants.CHAT_ITEM_SENDING);
@@ -364,17 +450,20 @@ public class IMActivity extends AppCompatActivity {
             }
         }, 2000);
         new Handler().postDelayed(new Runnable() {
-            public void run() {
-                MessageInfo message = new MessageInfo();
-                message.setContent("这是模拟消息回复");
-                message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
-                message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
-                message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
-                messageInfos.add(message);
-                chatAdapter.notifyItemInserted(messageInfos.size() - 1);
-                chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
-            }
-        }, 3000);
+                                      public void run() {
+                                          MessageInfo message = new MessageInfo();
+                                          message.setContent("这是模拟消息回复");
+                                          message.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                                          message.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+                                          message.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+                                          messageInfos.add(message);
+                                          chatAdapter.notifyItemInserted(messageInfos.size() - 1);
+                                          chatList.scrollToPosition(chatAdapter.getItemCount() - 1);
+                                      }
+                                  },
+                3000);
+
+
     }
 
 

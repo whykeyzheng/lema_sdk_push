@@ -43,18 +43,8 @@ class ChatFragment : Fragment(), OnchatIdClick {
 
     private fun setListener() {
         btnDetail!!.setOnClickListener {
-            LMClient.getUserChatDetail("daxiong", object : LMBasicBeanCallback<LMChatBean?>() {
-                override fun gotResultSuccess(lmChatBean: LMChatBean?) {
-                    bean = lmChatBean
-                    val intent = Intent(activity, IMActivity::class.java)
-                    intent.putExtra(USER_BEAN, bean)
-                    startActivity(intent)
-                }
-
-                override fun gotResultFail(i: Int, s: String) {
-                    Toast.makeText(activity, s, Toast.LENGTH_LONG).show()
-                }
-            })
+            val intent = Intent(activity, IMActivity::class.java)
+            startActivity(intent)
         }
     }
 
