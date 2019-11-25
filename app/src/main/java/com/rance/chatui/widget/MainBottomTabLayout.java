@@ -30,7 +30,7 @@ public class MainBottomTabLayout extends LinearLayout {
     private int mSelectedPosition;
     private float mSelectionOffset;
 
-    private String mTitles[] = {"聊天", "好友", "发现", "我的"};
+    private String mTitles[] = {"聊天", "好友", "好友申请", "我的"};
     private int mIconRes[][] = {
             {R.drawable.icon_main_home_normal, R.drawable.icon_main_home_selected},
             {R.drawable.icon_main_category_normal, R.drawable.icon_main_category_selected},

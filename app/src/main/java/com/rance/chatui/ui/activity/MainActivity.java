@@ -54,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
-        }else  if(id == R.id.action_pass){
+        }else  if(id == R.id.action_pass){//修改密码
+            Intent intent = new Intent(MainActivity.this, PassUpdateActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        else  if(id == R.id.action_add_friend){//添加好友
             Intent intent = new Intent(MainActivity.this, PassUpdateActivity.class);
             startActivity(intent);
             return true;
