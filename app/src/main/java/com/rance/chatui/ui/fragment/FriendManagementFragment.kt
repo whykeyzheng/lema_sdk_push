@@ -7,20 +7,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.lema.imsdk.bean.chat.LMChatBean
 import com.lema.imsdk.bean.chat.LMFriendBean
 import com.lema.imsdk.callback.LMBasicApiCallback
-import com.lema.imsdk.callback.LMBasicBeanCallback
 import com.lema.imsdk.callback.LMBasicListCallback
 import com.lema.imsdk.client.LMClient
 import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
-import com.rance.chatui.adapter.ContactAdapter
 import com.rance.chatui.adapter.FriendManagementAdapter
-import org.greenrobot.eventbus.EventBus
 
 /**
  * author: daxiong
@@ -54,9 +49,8 @@ class FriendManagementFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //  初始化数据
         initData()
-
 
     }
 

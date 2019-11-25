@@ -68,28 +68,29 @@ class FriendListFrament : Fragment(){
         override fun gotResultSuccess(p0: MutableList<LMFriendBean>?) {
             Toast.makeText(context, "获取好友列表成功", Toast.LENGTH_SHORT).show()
             LMLogUtils.d("daxiong", "====获取好友列表成功====")
-
-            p0!!.forEachIndexed { index, lmFriendBean ->
-                LMLogUtils.d("daxiong", "====打印第 $index 个好友开始====")
-                LMLogUtils.d("daxiong", "====my_username====" + lmFriendBean.my_username)
-                LMLogUtils.d("daxiong", "====username====" + lmFriendBean.username)
-                LMLogUtils.d("daxiong", "====chat_id====" + lmFriendBean.chat_id)
-                LMLogUtils.d("daxiong", "====status====" + lmFriendBean.status)
-                LMLogUtils.d("daxiong", "====打印第 $index 个好友结束====")
-            }
+//
+//            p0!!.forEachIndexed { index, lmFriendBean ->
+//                LMLogUtils.d("daxiong", "====打印第 $index 个好友开始====")
+//                LMLogUtils.d("daxiong", "====my_username====" + lmFriendBean.my_username)
+//                LMLogUtils.d("daxiong", "====username====" + lmFriendBean.username)
+//                LMLogUtils.d("daxiong", "====chat_id====" + lmFriendBean.chat_id)
+//                LMLogUtils.d("daxiong", "====status====" + lmFriendBean.status)
+//                LMLogUtils.d("daxiong", "====打印第 $index 个好友结束====")
+//            }
 
             fmAdapter.LMFriendBeanList = p0
             fmAdapter.setOnFriendClickListener(object : FriendListAdapter.OnFriendClickListener{
 
                 override fun onAgreeFriendClick(position: Int) {
-                    LMLogUtils.d("daxiong", "====点击==tv_agree=="+p0[position].username)
-
-                    LMClient.friendApprove(p0[position].username,1, addCallback)
+                    p0?.let {
+                        LMClient.friendApprove(p0[position].username, 1, addCallback)
+                    }
                 }
 
                 override fun onRefuseFriendClick(position: Int) {
-                    LMLogUtils.d("daxiong", "====点击==tv_region=="+p0[position].username)
-                    LMClient.friendApprove(p0[position].username,-1, addCallback)
+                    p0?.let {
+                        LMClient.friendApprove(p0[position].username, -1, addCallback)
+                    }
                 }
             })
             fmAdapter.notifyDataSetChanged()

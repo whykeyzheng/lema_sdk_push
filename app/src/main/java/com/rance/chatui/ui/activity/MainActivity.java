@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         else  if(id == R.id.action_add_friend){//添加好友
-            Intent intent = new Intent(MainActivity.this, PassUpdateActivity.class);
+            Intent intent = new Intent(MainActivity.this, AddFriendActivity.class);
             startActivity(intent);
             return true;
         }

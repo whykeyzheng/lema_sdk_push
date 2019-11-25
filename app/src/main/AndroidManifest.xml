@@ -64,6 +64,7 @@
         <activity android:name=".ui.activity.PassUpdateActivity" />
         <activity android:name=".ui.activity.AvatarLoadActivity" />
         <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.AddFriendActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
