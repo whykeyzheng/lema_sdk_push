@@ -29,6 +29,7 @@ import com.lema.imsdk.bean.chat.LMFriendBean;
 import com.lema.imsdk.bean.message.LMMessageBean;
 import com.lema.imsdk.bean.message.LMMessageExecuteBean;
 import com.lema.imsdk.callback.LMBasicBeanCallback;
+import com.lema.imsdk.callback.LMBasicListCallback;
 import com.lema.imsdk.callback.LMMessageEventListener;
 import com.lema.imsdk.client.LMClient;
 import com.lema.imsdk.util.LMLogUtils;
@@ -89,8 +90,9 @@ public class IMActivity extends AppCompatActivity {
     int res = 0;
     AnimationDrawable animationDrawable = null;
     private ImageView animView;
-    private LMChatBean bean;
-
+    private LMChatBean bean = new LMChatBean();
+    LMMessageBean messageBean;
+    List<LMMessageBean> lists = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,13 +101,12 @@ public class IMActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         findViewByIds();
         EventBus.getDefault().register(this);
-        initWidget();
         //获取传过来的参数
         Intent intent = getIntent();
-        String chatID= intent.getStringExtra("lm_friend_chat_id");
-        String userName =intent.getStringExtra("lm_friend_user_name");
+        String chatID = intent.getStringExtra("lm_friend_chat_id");
+        String userName = intent.getStringExtra("lm_friend_user_name");
         enterRoom(userName);
-
+        initWidget();
         handleIncomeAction();
 
 
@@ -132,6 +133,32 @@ public class IMActivity extends AppCompatActivity {
             public void gotResultSuccess(LMChatBean lmChatBean) {
                 bean = lmChatBean;
                 LMClient.enterChatRoom(lmChatBean);
+                lmChatBean.getMessagesFromNewest(null, 10, new LMBasicListCallback<LMMessageBean>() {
+                    @Override
+                    public void gotResultSuccess(List<LMMessageBean> list) {
+
+                        if (null != list && list.size() > 0) {
+                            for (int i = 0; i < list.size(); i++) {
+                                MessageInfo ss = new MessageInfo();
+                                ss.setContent(list.get(i).content.text);
+                                ss.setFileType(Constants.CHAT_FILE_TYPE_TEXT);
+                                ss.setType(Constants.CHAT_ITEM_TYPE_LEFT);
+                                ss.setHeader("http://img0.imgtn.bdimg.com/it/u=401967138,750679164&fm=26&gp=0.jpg");
+                                messageInfos.add(ss);
+
+                            }
+
+                        }
+                        chatAdapter.addAll(messageInfos);
+                        chatAdapter.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void gotResultFail(int i, String s) {
+
+                    }
+                });
             }
 
             @Override
@@ -374,7 +401,7 @@ public class IMActivity extends AppCompatActivity {
 //        messageInfo3.setHeader("http://img.dongqiudi.com/uploads/avatar/2014/10/20/8MCTb0WBFG_thumb_1413805282863.jpg");
 //        messageInfos.add(messageInfo3);
 
-        chatAdapter.addAll(messageInfos);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -382,8 +409,12 @@ public class IMActivity extends AppCompatActivity {
 
         //创建消息和发送消息
         Log.e("whykey", "=====" + messageInfo.getContent());
-        LMMessageBean beans = bean.createTxtMessage(messageInfo.getContent());
-        LMClient.sendMessage(beans);
+        Log.e("whykey", "=====" + bean.chat_id);
+        messageBean = bean.createTxtMessage(messageInfo.getContent());
+        LMClient.sendMessage(messageBean);
+        Log.e("whykey", "=====" + messageBean.content);
+
+
 //        beans.setSendCallback(new LMMessageCallBack() {
 //                                  @Override
 //                                  public void gotResultSuccess(LMMessageBean lmMessageBean) {
@@ -400,7 +431,7 @@ public class IMActivity extends AppCompatActivity {
 
 
         //发送消息回调
-        LMClient.addMessageEventListener(beans.chat_id, new LMMessageEventListener() {
+        LMClient.addMessageEventListener(messageBean.chat_id, new LMMessageEventListener() {
             @Override
             public void onMessageReceive(LMMessageBean lmMessageBean) {
 
