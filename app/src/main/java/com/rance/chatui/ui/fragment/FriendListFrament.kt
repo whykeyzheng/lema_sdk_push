@@ -1,5 +1,6 @@
 package com.rance.chatui.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 import com.rance.chatui.adapter.FriendListAdapter
 import com.rance.chatui.eventbus.FriendLlistEventBus
+import com.rance.chatui.ui.activity.IMActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -77,6 +79,10 @@ class FriendListFrament : Fragment() {
 
                 override fun onFriendMessageClick(lmFriendBean: LMFriendBean) {
                     LMLogUtils.d("daxiong", "====点击了好友====" + lmFriendBean.username)
+
+                    val intent = Intent(activity, IMActivity::class.java)
+                    intent.putExtra("lm_friend_bean", lmFriendBean)
+                    startActivity(intent)
                 }
 
             })

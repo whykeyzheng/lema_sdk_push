@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -26,15 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.labo.kaji.relativepopupwindow.RelativePopupWindow;
 import com.lema.imsdk.bean.LMPersonBean;
 import com.lema.imsdk.bean.chat.LMChatBean;
+import com.lema.imsdk.bean.chat.LMFriendBean;
 import com.lema.imsdk.bean.message.LMMessageBean;
 import com.lema.imsdk.bean.message.LMMessageExecuteBean;
 import com.lema.imsdk.callback.LMBasicBeanCallback;
-import com.lema.imsdk.callback.LMMessageCallBack;
 import com.lema.imsdk.callback.LMMessageEventListener;
 import com.lema.imsdk.client.LMClient;
+import com.lema.imsdk.util.LMLogUtils;
 import com.rance.chatui.R;
 import com.rance.chatui.adapter.ChatAdapter;
-
 import com.rance.chatui.adapter.CommonFragmentPagerAdapter;
 import com.rance.chatui.enity.FullImageInfo;
 import com.rance.chatui.enity.Link;
@@ -55,6 +54,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,8 +100,20 @@ public class IMActivity extends AppCompatActivity {
         findViewByIds();
         EventBus.getDefault().register(this);
         initWidget();
-        enterRoom();
+
+        LMFriendBean lmFriendBean;
+        Intent intent = getIntent();
+        Serializable serializable = intent.getSerializableExtra("lm_friend_bean");
+        if (serializable instanceof LMFriendBean) {
+            lmFriendBean = (LMFriendBean) serializable;
+            LMLogUtils.d("daxiong", "=======Imactivity聊天的好友username=====" + lmFriendBean.username);
+            enterRoom(lmFriendBean.username);
+        }
+
+
         handleIncomeAction();
+
+
     }
 
     private void findViewByIds() {
@@ -119,8 +131,8 @@ public class IMActivity extends AppCompatActivity {
     /**
      * 进入会话
      */
-    private void enterRoom() {
-        LMClient.getUserChatDetail("daxiong", new LMBasicBeanCallback<LMChatBean>() {
+    private void enterRoom(String name) {
+        LMClient.getUserChatDetail(name, new LMBasicBeanCallback<LMChatBean>() {
             @Override
             public void gotResultSuccess(LMChatBean lmChatBean) {
                 bean = lmChatBean;
