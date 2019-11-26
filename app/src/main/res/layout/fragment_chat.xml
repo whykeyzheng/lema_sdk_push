@@ -9,11 +9,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btn_detail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="获取/创建会话详情" />
 
         <TextView
             android:id="@+id/tv_back"
