@@ -100,16 +100,11 @@ public class IMActivity extends AppCompatActivity {
         findViewByIds();
         EventBus.getDefault().register(this);
         initWidget();
-
-        LMFriendBean lmFriendBean;
+        //获取传过来的参数
         Intent intent = getIntent();
-        Serializable serializable = intent.getSerializableExtra("lm_friend_bean");
-        if (serializable instanceof LMFriendBean) {
-            lmFriendBean = (LMFriendBean) serializable;
-            LMLogUtils.d("daxiong", "=======Imactivity聊天的好友username=====" + lmFriendBean.username);
-            enterRoom(lmFriendBean.username);
-        }
-
+        String chatID= intent.getStringExtra("lm_friend_chat_id");
+        String userName =intent.getStringExtra("lm_friend_user_name");
+        enterRoom(userName);
 
         handleIncomeAction();
 

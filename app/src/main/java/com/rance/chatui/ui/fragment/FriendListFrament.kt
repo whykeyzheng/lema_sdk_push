@@ -2,6 +2,7 @@ package com.rance.chatui.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,9 +81,12 @@ class FriendListFrament : Fragment() {
                 override fun onFriendMessageClick(lmFriendBean: LMFriendBean) {
                     LMLogUtils.d("daxiong", "====点击了好友====" + lmFriendBean.username)
 
-                    val intent = Intent(activity, IMActivity::class.java)
-                    intent.putExtra("lm_friend_bean", lmFriendBean)
-                    startActivity(intent)
+                    if (!TextUtils.isEmpty(lmFriendBean.username) && !TextUtils.isEmpty(lmFriendBean.chat_id)) {
+                        val intent = Intent(activity, IMActivity::class.java)
+                        intent.putExtra("lm_friend_user_name", lmFriendBean.username)
+                        intent.putExtra("lm_friend_chat_id", lmFriendBean.chat_id)
+                        startActivity(intent)
+                    }
                 }
 
             })
