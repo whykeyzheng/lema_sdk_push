@@ -28,7 +28,6 @@ class FriendListAdapter(var LMFriendBeanList: MutableList<LMFriendBean>? = null)
 
         LMFriendBeanList?.let {
             val lmFriendBean = it[position]
-
             holder.tvName.text = lmFriendBean.username
             holder.itemView.setOnClickListener {
                 mOnFriendClickListener!!.onFriendMessageClick(lmFriendBean)

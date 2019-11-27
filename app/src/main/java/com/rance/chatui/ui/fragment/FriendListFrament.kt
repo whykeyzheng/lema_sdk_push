@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lema.imsdk.bean.chat.LMFriendBean
 import com.lema.imsdk.callback.LMBasicListCallback
 import com.lema.imsdk.client.LMClient
@@ -30,20 +31,21 @@ import org.greenrobot.eventbus.ThreadMode
  * description:
  * -----------------------------------------------
  */
-class FriendListFrament : Fragment() {
+class FriendListFrament : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     val recyclerView by lazy { view!!.findViewById<RecyclerView>(R.id.rv_friends) }
     val fmAdapter by lazy { FriendListAdapter() }
-    val tvBack by lazy { view!!.findViewById<TextView>(R.id.tv_back) }
+    val sfSwiperefreshlayout by lazy { view!!.findViewById<SwipeRefreshLayout>(R.id.srl_swipe_refresh_layout) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         EventBus.getDefault().register(this)
         recyclerView.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager? //LinearLayoutManager(activity)
         recyclerView.adapter = fmAdapter
-        tvBack.setOnClickListener {
-            initData()
-        }
+        sfSwiperefreshlayout.setOnRefreshListener(this) //刷新控件
+        sfSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +65,11 @@ class FriendListFrament : Fragment() {
 
     fun initData() {
         LMClient.friendList(callBackList)
+    }
+
+    override fun onRefresh() {
+        initData()
+        sfSwiperefreshlayout.isRefreshing = false
     }
 
     val callBackList = object : LMBasicListCallback<LMFriendBean>() {

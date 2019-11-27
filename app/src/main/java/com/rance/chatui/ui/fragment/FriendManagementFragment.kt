@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.lema.imsdk.bean.chat.LMFriendBean
 import com.lema.imsdk.callback.LMBasicApiCallback
 import com.lema.imsdk.callback.LMBasicListCallback
@@ -17,6 +18,7 @@ import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 import com.rance.chatui.adapter.FriendManagementAdapter
 import com.rance.chatui.eventbus.FriendLlistEventBus
+import com.rance.chatui.record.CommonDialog
 
 /**
  * author: daxiong
@@ -25,20 +27,21 @@ import com.rance.chatui.eventbus.FriendLlistEventBus
  * description:
  * -----------------------------------------------
  */
-class FriendManagementFragment : Fragment() {
+class FriendManagementFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     val recyclerView by lazy { view!!.findViewById<RecyclerView>(R.id.rv_friends) }
     val fmAdapter by lazy { FriendManagementAdapter() }
-    val tvBack by lazy { view!!.findViewById<TextView>(R.id.tv_back) }
+    val sfSwiperefreshlayout by lazy { view!!.findViewById<SwipeRefreshLayout>(R.id.srl_swipe_refresh_layout) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         //   EventBus.getDefault().register(this)
         recyclerView.layoutManager = GridLayoutManager(context, 1) as RecyclerView.LayoutManager? //LinearLayoutManager(activity)
         recyclerView.adapter = fmAdapter
-        tvBack.setOnClickListener {
-            initData()
-        }
+        sfSwiperefreshlayout.setOnRefreshListener(this) //刷新控件
+        sfSwiperefreshlayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light, android.R.color.holo_orange_light,
+                android.R.color.holo_red_light)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +61,12 @@ class FriendManagementFragment : Fragment() {
     fun initData() {
         LMClient.friendRequsetList(callBackList)
     }
+
+    override fun onRefresh() {
+        initData()
+        sfSwiperefreshlayout.isRefreshing = false
+    }
+
 
     val callBackList = object : LMBasicListCallback<LMFriendBean>() {
         override fun gotResultFail(p0: Int, p1: String?) {
@@ -85,7 +94,14 @@ class FriendManagementFragment : Fragment() {
 
                 override fun onDeleteFriendClick(position: Int) {
                     p0?.let {
-                        LMClient.friendDelete(p0[position].username, addCallback)
+                        CommonDialog(context!!, "删除好友", "确认要删除好友${p0[position].username}么？") {
+                            if (it) {
+                                LMClient.friendDelete(p0[position].username, addCallback)
+
+                            }
+                        }.show()
+
+
                     }
                 }
             })

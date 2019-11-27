@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.lema.imsdk.bean.chat.LMChatBean
 import com.lema.imsdk.bean.chat.LMFriendBean
+import com.lema.imsdk.util.LMLogUtils
 import com.rance.chatui.R
 
 /**
@@ -19,7 +20,7 @@ import com.rance.chatui.R
  * -----------------------------------------------
  */
 class FriendMessageListApapter(var context: Context, var LMChatBeanList: MutableList<LMChatBean>? = null) : RecyclerView.Adapter<FriendMessageListApapter.ViewHolder>() {
-
+    private var mOnFriendClickListener: FriendMessageListApapter.OnFriendClickListener? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendMessageListApapter.ViewHolder {
 //        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contact, parent, false)
 //        val viewHolder = FriendManagementAdapter.ViewHolder(view)
@@ -32,9 +33,10 @@ class FriendMessageListApapter(var context: Context, var LMChatBeanList: Mutable
 
         LMChatBeanList?.let {
             val lmChatBean = it[position]
-            Glide.with(context).load(lmChatBean.avatar).placeholder(R.mipmap.ic_start_logo).error(R.mipmap.ic_start_logo).into(holder.tvAvatar)
-            holder.tvName.text = lmChatBean.friend_username
+
+            holder.tvName.text = lmChatBean.friend.username
             holder.tvCount.text ="未读消息" +lmChatBean.unread_count.toString()+"条"
+            Glide.with(context).load(lmChatBean.avatar).placeholder(R.mipmap.ic_start_logo).error(R.mipmap.ic_start_logo).into(holder.tvAvatar)
             holder.itemView.setOnClickListener {
                 mOnFriendClickListener!!.onFriendMessageClick(lmChatBean)
             }
@@ -56,7 +58,7 @@ class FriendMessageListApapter(var context: Context, var LMChatBeanList: Mutable
         var tvCount: TextView = itemView.findViewById<View>(R.id.tv_count) as TextView
 
     }
-    private var mOnFriendClickListener: FriendMessageListApapter.OnFriendClickListener? = null
+
     interface OnFriendClickListener {
         fun onFriendMessageClick(lmFriendBean: LMChatBean)
         fun onDeleteMessageClick(lmFriendBean: LMChatBean)
