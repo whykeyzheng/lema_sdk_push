@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.lema.imsdk.callback.LMChatEventListener;
 import com.lema.imsdk.client.LMClient;
 import com.rance.chatui.R;
 import com.rance.chatui.adapter.TestFragmentAdapter;
@@ -54,12 +55,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             return true;
-        }else  if(id == R.id.action_pass){//修改密码
+        } else if (id == R.id.action_pass) {//修改密码
             Intent intent = new Intent(MainActivity.this, PassUpdateActivity.class);
             startActivity(intent);
             return true;
-        }
-        else  if(id == R.id.action_add_friend){//添加好友
+        } else if (id == R.id.action_add_friend) {//添加好友
             Intent intent = new Intent(MainActivity.this, AddFriendActivity.class);
             startActivity(intent);
             return true;
@@ -97,5 +97,22 @@ public class MainActivity extends AppCompatActivity {
             mTabLayout = (MainBottomTabLayout) view.findViewById(R.id.main_bottom_tablayout);
             mTabLayout.setViewPager(mPager);
         }
+    }
+
+    LMChatEventListener listener = new LMChatEventListener() {
+        @Override
+        public void onChatListChanged() {
+            //注销成功
+        }
+    };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        /**
+         * 注销列表通知回调
+         * @param listener
+         */
+        LMClient.removeChatListEventListener(listener);
     }
 }

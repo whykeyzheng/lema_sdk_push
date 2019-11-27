@@ -5,6 +5,7 @@
     <color name="colorAccent">#3F51B5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
 
     <!-- 其它背景色或分割线相关 -->
     <color name="bg_content">#f3f3f3</color>
